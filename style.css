@@ -1,0 +1,13 @@
+@import url('https://fonts.googleapis.com/css?family=Poppins');
+
+body {
+    font-family: Poppins, Arial, sans-serif;
+    text-align: center;
+}
+header {
+    margin: .5em 1em;
+    background-color: #3E8EDE;
+    border: 1em solid #4d2612;
+    border-radius: 2em;
+    color: #fff;
+}

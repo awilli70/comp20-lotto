@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lottery Sim</title>
+</head>
+<body>
+    <script>
+    window.onload = function () {
+        
+        let lotNums = [0, 0, 0, 0, 0]
+        lotNums = lotNums.map(x => Math.floor(Math.random() * 47 + 1))
+        lotNums.sort((a, b) => a - b)
+        lotNumsCopy = Array.from(lotNums)
+        let powerBall = Math.floor(Math.random() * 17 + 1);
+
+        console.log(lotNums)
+        console.log(powerBall)
+
+        let usrNumString = prompt("Please enter your five numbers [1-48], seperated by a space", "")
+        let usrNums = usrNumString.split(" ", 5)
+        usrNums = usrNums.map(x => parseInt(x))
+        usrNums.sort((a,b) => a - b)
+        let usrPowerBall = parseInt(prompt("Please enter your powerball number [1-18]", ""))
+
+        let matches = 0;
+        let nums = "<p class='their'>Your Numbers: "
+        for (let i = 0; i < usrNums.length; i++) {
+            let matchIdx = lotNumsCopy.indexOf(usrNums[i])
+            if (matchIdx !== -1) {
+                matches += 1;
+                lotNumsCopy[matchIdx] = 0;
+            } 
+            nums += usrNums[i].toString() + " "
+        }
+        nums += `with LuckyBall ${usrPowerBall}</p>`
+        nums += `<p class='winner'>Winning Numbers: ${lotNums.join(" ")} with LuckyBall ${powerBall}</p>`
+        let html = `<h2 class='matches'>You matched ${matches} ${(matches === 1)? "number" : "numbers"} and ${(usrPowerBall === powerBall)? "the LuckyBall!" : "didn't match the LuckyBall."}</h2>`
+        html += `<h2 class='winnings'>Your winnings are: `
+        switch (matches) {
+            case 5: html += (usrPowerBall === powerBall)? "$7000 a week for life!" : "$25000 a year for life!";
+                break;
+            case 4: html += (usrPowerBall === powerBall)? "$5000!" : "$200!";
+                break;
+            case 3: html += (usrPowerBall === powerBall)? "$150!" : "$20!";
+                break;
+            case 2: html += (usrPowerBall === powerBall)? "$25!" : "$3!";
+                break;
+            case 1: html += (usrPowerBall === powerBall)? "$6!" : "$0. Better luck next time!";
+                break;
+            default:
+                html += (usrPowerBall === powerBall)? "$4!" : "$0. Better luck next time!";
+        }
+        html += "</h2>"
+        html += nums
+
+        let output = document.getElementById('content')
+        console.log(output);
+        output.innerHTML = html;
+
+    }
+    </script>
+    <header><h1>Jumbo LuckyBall <span style="color: rgb(255, 118, 118)">Lottery</span></h1>
+    <h3>Current Jackpot: $7500 a week for LIFE!</h3>
+    </header>
+    <div id="content"></div>
+</body>
+</html>
